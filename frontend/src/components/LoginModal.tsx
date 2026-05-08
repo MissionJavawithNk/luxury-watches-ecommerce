@@ -48,7 +48,7 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }: LoginModalProps) => {
       left: 0,
       width: '100%',
       height: '100%',
-      background: 'rgba(0,0,0,0.8)',
+      background: 'rgba(0,0,0,0.4)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -62,7 +62,7 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }: LoginModalProps) => {
         borderRadius: '8px',
         position: 'relative'
       }}>
-        <button onClick={onClose} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', color: 'white', fontSize: '1.2rem' }}>✕</button>
+        <button onClick={onClose} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', color: 'var(--text-main)', fontSize: '1.2rem' }}>✕</button>
         
         <h2 className="serif" style={{ fontSize: '2rem', marginBottom: '2rem', textAlign: 'center' }}>
           {isRegister ? 'Join the Heritage' : 'Welcome Back'}
@@ -76,7 +76,7 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }: LoginModalProps) => {
                 type="text" 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                style={{ width: '100%', padding: '0.8rem', background: 'var(--bg-dark)', border: '1px solid var(--border)', color: 'white' }} 
+                style={{ width: '100%', padding: '0.8rem', background: 'rgba(0,0,0,0.03)', border: '1px solid var(--border)', color: 'var(--text-main)' }} 
                 required 
               />
             </div>
@@ -87,7 +87,7 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }: LoginModalProps) => {
               type="email" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{ width: '100%', padding: '0.8rem', background: 'var(--bg-dark)', border: '1px solid var(--border)', color: 'white' }} 
+              style={{ width: '100%', padding: '0.8rem', background: 'rgba(0,0,0,0.03)', border: '1px solid var(--border)', color: 'var(--text-main)' }} 
               required 
             />
           </div>
@@ -97,7 +97,7 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }: LoginModalProps) => {
               type="password" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{ width: '100%', padding: '0.8rem', background: 'var(--bg-dark)', border: '1px solid var(--border)', color: 'white' }} 
+              style={{ width: '100%', padding: '0.8rem', background: 'rgba(0,0,0,0.03)', border: '1px solid var(--border)', color: 'var(--text-main)' }} 
               required 
             />
           </div>

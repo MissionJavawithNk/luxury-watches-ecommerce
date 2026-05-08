@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
 
 :root {
-  --primary: #c5a059; /* Gold accent */
-  --bg-dark: #0a0a0a;
-  --bg-card: #141414;
-  --text-main: #ffffff;
-  --text-muted: #a0a0a0;
-  --border: #222222;
+  --primary: #8a6d3b; /* More muted, expensive gold */
+  --bg-body: #ffffff;
+  --bg-section: #fbfbfb; /* Subtle contrast like Apple.com */
+  --text-main: #1d1d1f; /* Apple's specific text color */
+  --text-muted: #86868b; /* Apple's specific muted color */
+  --border: #d2d2d7;
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
 * {
@@ -16,48 +17,64 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-dark);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-body);
   color: var(--text-main);
-  line-height: 1.6;
+  line-height: 1.47059;
+  letter-spacing: -0.022em; /* Apple's signature tight tracking */
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, .serif {
+h1, h2, h3 {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.serif {
   font-family: 'Playfair Display', serif;
+  font-weight: 400;
 }
 
 .premium-gradient {
-  background: linear-gradient(135deg, #c5a059 0%, #8e6d2f 100%);
+  background: linear-gradient(180deg, #1d1d1f 0%, #434345 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-button {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
 .container {
-  max-width: 1200px;
+  max-width: 1400px; /* Wider like Coach's editorial layout */
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 4rem;
 }
 
-/* Glassmorphism */
+/* Apple-style Ethereal Nav */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.watch-card {
+  background: var(--bg-body);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none !important;
 }
 
 .watch-card:hover {
-  transform: translateY(-10px);
-  border-color: var(--primary) !important;
+  transform: scale(1.02);
 }
 
 .fade-in {
   animation: fadeIn 1.2s ease-out forwards;
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.slide-up {
+  animation: slideUp 0.8s ease-out forwards;
+  opacity: 0;
 }
 
 @keyframes fadeIn {
@@ -65,8 +82,19 @@ button {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 768px) {
-  h1 { fontSize: 3rem !important; }
+  h1 { font-size: 3rem !important; }
   .container { grid-template-columns: 1fr !important; }
   section { padding: 4rem 0 !important; }
 }

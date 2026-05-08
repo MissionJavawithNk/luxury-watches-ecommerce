@@ -1,4 +1,3 @@
-import React from 'react';
 
 interface Watch {
   id: number;
@@ -34,11 +33,11 @@ const CartSidebar = ({ isOpen, onClose, cartItems, onRemove, onCheckout }: CartS
       padding: '2rem',
       display: 'flex',
       flexDirection: 'column',
-      boxShadow: '-10px 0 30px rgba(0,0,0,0.5)'
+      boxShadow: '-10px 0 30px rgba(0,0,0,0.05)'
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
         <h2 className="serif" style={{ fontSize: '1.8rem' }}>Your Bag</h2>
-        <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem' }}>✕</button>
+        <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text-main)', fontSize: '1.5rem' }}>✕</button>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto' }}>

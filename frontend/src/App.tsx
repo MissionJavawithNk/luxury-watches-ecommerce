@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ProductCard from './components/ProductCard';
 import CartSidebar from './components/CartSidebar';
 import LoginModal from './components/LoginModal';
+import ProductDetail from './components/ProductDetail';
 
 interface Watch {
   id: number;
@@ -21,7 +22,7 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [selectedWatch, setSelectedWatch] = useState<Watch | null>(null);
 
   useEffect(() => {
     fetch('http://localhost:8080/api/watches')
@@ -29,7 +30,6 @@ function App() {
       .then(data => {
         setWatches(data);
         setFilteredWatches(data);
-        setLoading(false);
       })
       .catch(err => {
         console.error("Failed to fetch watches:", err);
@@ -41,7 +41,6 @@ function App() {
         ];
         setWatches(fallback);
         setFilteredWatches(fallback);
-        setLoading(false);
       });
   }, []);
 
@@ -106,10 +105,20 @@ function App() {
         onCartClick={() => setIsCartOpen(true)} 
         onAccountClick={() => !user && setIsLoginOpen(true)}
         onSearch={handleSearch}
+        onCollectionClick={() => {
+          setSelectedWatch(null);
+          setTimeout(() => {
+            document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }}
+        onHeritageClick={() => {
+          setSelectedWatch(null);
+          setTimeout(() => {
+            document.getElementById('heritage')?.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }}
         user={user}
       />
-      
-      <Hero />
       
       <CartSidebar 
         isOpen={isCartOpen} 
@@ -125,28 +134,57 @@ function App() {
         onLoginSuccess={(u) => setUser(u)} 
       />
 
-      <section style={{ padding: '8rem 0' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-            <h2 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Our Collection</h2>
-            <div style={{ width: '60px', height: '2px', background: 'var(--primary)', margin: '0 auto' }}></div>
-          </div>
+      {selectedWatch ? (
+        <ProductDetail 
+          watch={selectedWatch} 
+          onBack={() => setSelectedWatch(null)} 
+          onAddToCart={addToCart} 
+        />
+      ) : (
+        <>
+          <Hero 
+            onExploreClick={() => {
+              document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            onHeritageClick={() => {
+              document.getElementById('heritage')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
           
-          {filteredWatches.length === 0 ? (
-            <p style={{ textAlign: 'center', color: 'var(--text-muted)' }}>No timepieces found matching your search.</p>
-          ) : (
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-              gap: '3rem' 
-            }}>
-              {filteredWatches.map(watch => (
-                <ProductCard key={watch.id} watch={watch} onAddToCart={addToCart} />
-              ))}
+          <section id="collection" style={{ padding: '10rem 0', background: 'var(--bg-section)' }}>
+            <div className="container">
+              <div style={{ marginBottom: '6rem' }}>
+                <h2 style={{ fontSize: '3.5rem', fontWeight: 600, letterSpacing: '-0.02em', marginBottom: '1rem' }}>The Collection</h2>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', maxWidth: '600px' }}>
+                  Explore our curated selection of heritage timepieces, where every second is a testament to precision.
+                </p>
+              </div>
+              
+              {filteredWatches.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '10rem 0' }}>
+                   <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem' }}>No timepieces found matching your search.</p>
+                </div>
+              ) : (
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', 
+                  gap: '2rem' 
+                }}>
+                  {filteredWatches.map((watch, index) => (
+                    <div key={watch.id} className="slide-up" style={{ animationDelay: `${index * 0.1}s`, background: 'var(--bg-body)', borderRadius: '12px' }}>
+                      <ProductCard 
+                        watch={watch} 
+                        onAddToCart={addToCart} 
+                        onViewDetails={(w) => setSelectedWatch(w)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </section>
+          </section>
+        </>
+      )}
 
       <section style={{ background: 'var(--bg-card)', padding: '6rem 0', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
         <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4rem', textAlign: 'center' }}>
@@ -165,7 +203,7 @@ function App() {
         </div>
       </section>
 
-      <section style={{ padding: '8rem 0', textAlign: 'center' }}>
+      <section id="heritage" style={{ padding: '8rem 0', textAlign: 'center' }}>
         <div className="container">
           <h2 className="serif" style={{ fontSize: '2.5rem', marginBottom: '4rem' }}>Collector Voices</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '4rem' }}>

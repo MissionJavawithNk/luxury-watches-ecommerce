@@ -1,55 +1,71 @@
-import React from 'react';
 
 interface NavbarProps {
   cartCount: number;
   onCartClick: () => void;
   onAccountClick: () => void;
   onSearch: (query: string) => void;
+  onCollectionClick: () => void;
+  onHeritageClick: () => void;
   user: any;
 }
 
-const Navbar = ({ cartCount, onCartClick, onAccountClick, onSearch, user }: NavbarProps) => {
+const Navbar = ({ cartCount, onCartClick, onAccountClick, onSearch, onCollectionClick, onHeritageClick, user }: NavbarProps) => {
   return (
-    <nav className="glass" style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000, padding: '1rem 0' }}>
-      <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', letterSpacing: '2px' }} className="serif">
-          HOROLOGE <span style={{ color: 'var(--primary)' }}>PREMIUM</span>
+    <nav className="glass" style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000, height: '44px', display: 'flex', alignItems: 'center' }}>
+      <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+        <div 
+          onClick={onCollectionClick}
+          style={{ fontSize: '1.2rem', fontWeight: 600, letterSpacing: '-0.02em', cursor: 'pointer' }}
+        >
+          HOROLOGE
         </div>
         
-        <div style={{ flex: 1, margin: '0 3rem', maxWidth: '400px', position: 'relative' }}>
-          <input 
-            type="text" 
-            placeholder="Search our collection..."
-            onChange={(e) => onSearch(e.target.value)}
-            style={{ 
-              width: '100%', 
-              padding: '0.6rem 1rem', 
-              background: 'rgba(255,255,255,0.05)', 
-              border: '1px solid var(--border)', 
-              color: 'white',
-              borderRadius: '20px'
-            }}
-          />
+        <div style={{ display: 'flex', gap: '2.5rem', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+          <span 
+            onClick={onCollectionClick} 
+            style={{ color: 'var(--text-main)', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 400, opacity: 0.8 }}
+            className="nav-link"
+          >
+            Collection
+          </span>
+          <span 
+            onClick={onHeritageClick} 
+            style={{ color: 'var(--text-main)', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 400, opacity: 0.8 }}
+            className="nav-link"
+          >
+            Heritage
+          </span>
+          <div style={{ position: 'relative', width: '150px' }}>
+            <input 
+              type="text" 
+              placeholder="Search"
+              onChange={(e) => onSearch(e.target.value)}
+              style={{ 
+                width: '100%', 
+                padding: '0.4rem 0.8rem', 
+                background: 'transparent', 
+                border: 'none', 
+                color: 'var(--text-main)',
+                fontSize: '0.75rem',
+                borderBottom: '1px solid rgba(0,0,0,0.1)'
+              }}
+            />
+          </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-          <div style={{ display: 'flex', gap: '2rem', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 600 }}>
-            <a href="#" style={{ color: 'white', textDecoration: 'none' }}>Collection</a>
-            <a href="#" style={{ color: 'white', textDecoration: 'none' }}>Heritage</a>
-          </div>
-          
+        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
           <button 
             onClick={onAccountClick}
-            style={{ background: 'none', border: 'none', color: user ? 'var(--primary)' : 'white', fontSize: '0.85rem', fontWeight: 600 }}
+            style={{ background: 'none', border: 'none', color: user ? 'var(--primary)' : 'var(--text-main)', fontSize: '0.75rem', fontWeight: 400, opacity: 0.8 }}
           >
-            {user ? user.name.toUpperCase() : 'ACCOUNT'}
+            {user ? user.name.toUpperCase() : 'Sign In'}
           </button>
           
           <button 
             onClick={onCartClick}
-            style={{ background: 'var(--primary)', border: 'none', color: 'black', fontWeight: 'bold', padding: '0.5rem 1rem', borderRadius: '4px', fontSize: '0.8rem' }}
+            style={{ background: 'none', border: 'none', color: 'var(--text-main)', fontWeight: 600, fontSize: '0.75rem', position: 'relative' }}
           >
-            BAG ({cartCount})
+            Bag <span style={{ fontSize: '0.6rem', position: 'absolute', top: '-5px', right: '-10px', background: 'var(--text-main)', color: 'white', padding: '1px 4px', borderRadius: '10px' }}>{cartCount}</span>
           </button>
         </div>
       </div>

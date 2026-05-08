@@ -1,59 +1,43 @@
-import React from 'react';
 
-const Hero = () => {
+interface HeroProps {
+  onExploreClick: () => void;
+  onHeritageClick: () => void;
+}
+
+const Hero = ({ onExploreClick, onHeritageClick }: HeroProps) => {
   return (
-    <section style={{ height: '100vh', display: 'flex', alignItems: 'center', paddingTop: '80px' }}>
-      <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <h2 style={{ color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '4px', fontSize: '0.9rem', marginBottom: '1rem' }}>
-            Est. 1884
-          </h2>
-          <h1 style={{ fontSize: '4.5rem', lineHeight: 1.1, marginBottom: '2rem' }}>
-            Precision in <br />
-            <span className="premium-gradient">Every Second</span>
+    <section style={{ minHeight: '90vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingTop: '100px', textAlign: 'center' }}>
+      <div className="container">
+        <div style={{ maxWidth: '800px', margin: '0 auto', marginBottom: '4rem' }} className="fade-in">
+          <h1 style={{ fontSize: '5rem', fontWeight: 600, letterSpacing: '-0.03em', marginBottom: '1.5rem', lineHeight: 1.05 }}>
+            The art of precision. <br />
+            <span style={{ color: 'var(--text-muted)' }}>Timeless by design.</span>
           </h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '3rem', maxWidth: '500px' }}>
-            Discover our curated collection of world-class timepieces, where heritage meets modern craftsmanship.
-          </p>
-          <div style={{ display: 'flex', gap: '1.5rem' }}>
-            <button style={{ 
-              background: 'var(--primary)', 
-              color: 'black', 
-              padding: '1rem 2.5rem', 
-              border: 'none', 
-              fontWeight: 'bold', 
-              textTransform: 'uppercase' 
-            }}>
-              Explore Collection
+          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center' }}>
+            <button 
+              onClick={onExploreClick}
+              style={{ background: 'none', border: 'none', color: '#0066cc', fontSize: '1.1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              Buy <span>›</span>
             </button>
-            <button style={{ 
-              background: 'transparent', 
-              color: 'white', 
-              padding: '1rem 2.5rem', 
-              border: '1px solid var(--border)', 
-              fontWeight: 'bold', 
-              textTransform: 'uppercase' 
-            }}>
-              Our Heritage
+            <button 
+              onClick={onHeritageClick}
+              style={{ background: 'none', border: 'none', color: '#0066cc', fontSize: '1.1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              Learn more <span>›</span>
             </button>
           </div>
         </div>
-        <div style={{ position: 'relative' }}>
-          <img 
-            src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=1200" 
-            alt="Luxury Watch" 
-            style={{ width: '100%', height: 'auto', borderRadius: '4px', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}
-          />
-          <div style={{ 
-            position: 'absolute', 
-            bottom: '-20px', 
-            right: '-20px', 
-            background: 'var(--bg-card)', 
-            padding: '2rem', 
-            border: '1px solid var(--border)' 
-          }}>
-            <p style={{ fontSize: '1.5rem' }} className="serif">Limited Edition</p>
-            <p style={{ color: 'var(--primary)' }}>Available Now</p>
+
+        <div style={{ width: '100%', maxWidth: '1100px', margin: '0 auto', position: 'relative' }} className="fade-in">
+          <div style={{ borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 50px rgba(0,0,0,0.1)' }}>
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+            >
+              <source src="https://videos.pexels.com/video-files/32856239/14004256_1080_1920_60fps.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </div>

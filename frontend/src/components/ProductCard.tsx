@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface Watch {
   id: number;
   name: string;
@@ -12,52 +10,44 @@ interface Watch {
 interface ProductCardProps {
   watch: Watch;
   onAddToCart: (watch: Watch) => void;
+  onViewDetails: (watch: Watch) => void;
 }
 
-const ProductCard = ({ watch, onAddToCart }: ProductCardProps) => {
+const ProductCard = ({ watch, onAddToCart, onViewDetails }: ProductCardProps) => {
   return (
-    <div className="watch-card" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', padding: '1rem', transition: 'transform 0.3s ease' }}>
-      <div style={{ overflow: 'hidden', marginBottom: '1.5rem', height: '300px' }}>
+    <div className="watch-card" style={{ padding: '2rem', textAlign: 'center', cursor: 'pointer' }} onClick={() => onViewDetails(watch)}>
+      <div style={{ overflow: 'hidden', marginBottom: '2rem', height: '350px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <img 
           src={watch.imageUrl} 
           alt={watch.name} 
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', transition: 'transform 0.5s ease' }}
+          onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
         />
       </div>
-      <div style={{ textAlign: 'center' }}>
-        <p style={{ color: 'var(--primary)', textTransform: 'uppercase', fontSize: '0.7rem', letterSpacing: '2px', marginBottom: '0.5rem' }}>
+      <div>
+        <p style={{ color: 'var(--primary)', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '1px', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
           {watch.brand}
         </p>
-        <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>{watch.name}</h3>
+        <h3 style={{ fontSize: '1.4rem', fontWeight: 600, marginBottom: '0.5rem' }}>{watch.name}</h3>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1rem' }}>{watch.category}</p>
-        <p style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>${watch.price.toLocaleString()}</p>
+        <p style={{ fontSize: '1.2rem', fontWeight: 400, marginBottom: '1.5rem' }}>From ${watch.price.toLocaleString()}</p>
+        
         <button 
-          onClick={() => onAddToCart(watch)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onAddToCart(watch);
+          }}
           style={{ 
-            marginTop: '1.5rem', 
-            width: '100%', 
-            background: 'var(--primary)', 
-            color: 'black', 
+            background: 'none', 
             border: 'none', 
-            padding: '0.8rem', 
-            textTransform: 'uppercase', 
-            fontSize: '0.8rem', 
-            fontWeight: 'bold',
-            marginBottom: '0.5rem'
-          }}>
+            color: '#0066cc', 
+            fontSize: '0.9rem', 
+            cursor: 'pointer',
+            padding: '0.5rem 1rem'
+          }}
+        >
           Add to Bag
-        </button>
-        <button style={{ 
-          width: '100%', 
-          background: 'transparent', 
-          color: 'white', 
-          border: '1px solid var(--border)', 
-          padding: '0.8rem', 
-          textTransform: 'uppercase', 
-          fontSize: '0.8rem', 
-          fontWeight: 'bold' 
-        }}>
-          View Details
         </button>
       </div>
     </div>
