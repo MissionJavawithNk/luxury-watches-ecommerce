@@ -142,6 +142,48 @@ function App() {
         />
       ) : (
         <>
+          <section style={{ paddingTop: '6rem', background: 'var(--bg-body)', textAlign: 'center' }}>
+            <div className="container">
+              <h2 className="serif" style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Curated Masterpieces</h2>
+              <p style={{ color: 'var(--text-muted)', fontSize: '1rem' }}>Shop by heritage and complication</p>
+            </div>
+          </section>
+          <section style={{ padding: '3rem 0 6rem 0', background: 'var(--bg-body)' }}>
+            <div className="container">
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+                {['Diver', 'Chronograph', 'Luxury'].map((cat) => (
+                  <div 
+                    key={cat}
+                    onClick={() => handleSearch(cat)}
+                    style={{ 
+                      height: '250px', 
+                      background: 'var(--bg-section)', 
+                      borderRadius: '16px', 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      border: '1px solid var(--border)'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-5px)';
+                      e.currentTarget.style.boxShadow = 'var(--shadow-soft)';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    <span style={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '2px', color: 'var(--primary)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Explore</span>
+                    <h3 className="serif" style={{ fontSize: '1.8rem' }}>{cat}</h3>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
           <Hero 
             onExploreClick={() => {
               document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
@@ -165,13 +207,14 @@ function App() {
                    <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem' }}>No timepieces found matching your search.</p>
                 </div>
               ) : (
-                <div style={{ 
+                <div className="collection-grid" style={{ 
                   display: 'grid', 
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', 
-                  gap: '2rem' 
+                  gridTemplateColumns: 'repeat(3, 1fr)', 
+                  gap: '2.5rem',
+                  alignItems: 'stretch'
                 }}>
                   {filteredWatches.map((watch, index) => (
-                    <div key={watch.id} className="slide-up" style={{ animationDelay: `${index * 0.1}s`, background: 'var(--bg-body)', borderRadius: '12px' }}>
+                    <div key={watch.id} className="slide-up" style={{ animationDelay: `${index * 0.1}s`, display: 'flex', flexDirection: 'column' }}>
                       <ProductCard 
                         watch={watch} 
                         onAddToCart={addToCart} 
@@ -187,18 +230,18 @@ function App() {
       )}
 
       <section style={{ background: 'var(--bg-card)', padding: '6rem 0', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4rem', textAlign: 'center' }}>
-          <div>
+        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', textAlign: 'center' }}>
+          <div style={{ background: 'var(--bg-section)', padding: '3rem 2rem', borderRadius: '12px', height: '100%', display: 'flex', flexDirection: 'column' }}>
             <h3 className="serif" style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Global Concierge</h3>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Personalized assistance for your horological journey, available 24/7 worldwide.</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', flexGrow: 1 }}>Personalized assistance for your horological journey, available 24/7 worldwide.</p>
           </div>
-          <div>
+          <div style={{ background: 'var(--bg-section)', padding: '3rem 2rem', borderRadius: '12px', height: '100%', display: 'flex', flexDirection: 'column' }}>
             <h3 className="serif" style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Certified Heritage</h3>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Every timepiece is rigorously authenticated and comes with a lifetime guarantee.</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', flexGrow: 1 }}>Every timepiece is rigorously authenticated and comes with a lifetime guarantee.</p>
           </div>
-          <div>
+          <div style={{ background: 'var(--bg-section)', padding: '3rem 2rem', borderRadius: '12px', height: '100%', display: 'flex', flexDirection: 'column' }}>
             <h3 className="serif" style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Bespoke Delivery</h3>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>White-glove delivery service ensuring your investment arrives in pristine condition.</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', flexGrow: 1 }}>White-glove delivery service ensuring your investment arrives in pristine condition.</p>
           </div>
         </div>
       </section>
@@ -207,12 +250,12 @@ function App() {
         <div className="container">
           <h2 className="serif" style={{ fontSize: '2.5rem', marginBottom: '4rem' }}>Collector Voices</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '4rem' }}>
-            <div className="glass" style={{ padding: '3rem', textAlign: 'left' }}>
-              <p style={{ fontStyle: 'italic', fontSize: '1.1rem', marginBottom: '1.5rem' }}>"The acquisition of my Patek Philippe through Horologe was seamless. Their attention to detail and heritage documentation is unmatched."</p>
+            <div className="glass" style={{ padding: '3rem', textAlign: 'left', height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <p style={{ fontStyle: 'italic', fontSize: '1.1rem', marginBottom: '1.5rem', flexGrow: 1 }}>"The acquisition of my Patek Philippe through Horologe was seamless. Their attention to detail and heritage documentation is unmatched."</p>
               <p style={{ fontWeight: 'bold', color: 'var(--primary)', letterSpacing: '1px' }}>— JULIAN V., GENEVA</p>
             </div>
-            <div className="glass" style={{ padding: '3rem', textAlign: 'left' }}>
-              <p style={{ fontStyle: 'italic', fontSize: '1.1rem', marginBottom: '1.5rem' }}>"Finally, a platform that understands the soul of a timepiece. The curated selection is a testament to their horological expertise."</p>
+            <div className="glass" style={{ padding: '3rem', textAlign: 'left', height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <p style={{ fontStyle: 'italic', fontSize: '1.1rem', marginBottom: '1.5rem', flexGrow: 1 }}>"Finally, a platform that understands the soul of a timepiece. The curated selection is a testament to their horological expertise."</p>
               <p style={{ fontWeight: 'bold', color: 'var(--primary)', letterSpacing: '1px' }}>— MARCUS T., LONDON</p>
             </div>
           </div>
