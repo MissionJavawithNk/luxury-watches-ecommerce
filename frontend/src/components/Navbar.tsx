@@ -1,4 +1,3 @@
-
 interface NavbarProps {
   cartCount: number;
   onCartClick: () => void;
@@ -11,61 +10,74 @@ interface NavbarProps {
 
 const Navbar = ({ cartCount, onCartClick, onAccountClick, onSearch, onCollectionClick, onHeritageClick, user }: NavbarProps) => {
   return (
-    <nav className="glass" style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000, height: '44px', display: 'flex', alignItems: 'center' }}>
+    <nav className="glass-nav" style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000, height: '60px', display: 'flex', alignItems: 'center' }}>
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-        <div 
-          onClick={onCollectionClick}
-          style={{ fontSize: '1.2rem', fontWeight: 600, letterSpacing: '-0.02em', cursor: 'pointer' }}
-        >
-          HOROLOGE
-        </div>
         
-        <div style={{ display: 'flex', gap: '2.5rem', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-          <span 
-            onClick={onCollectionClick} 
-            style={{ color: 'var(--text-main)', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 400, opacity: 0.8 }}
-            className="nav-link"
-          >
+        {/* Logo */}
+        <div onClick={onCollectionClick} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: '1px' }}>
+          <span className="serif" style={{ fontSize: '1.4rem', letterSpacing: '6px', color: 'var(--text-main)', textTransform: 'uppercase', lineHeight: 1 }}>
+            Horologe
+          </span>
+          <span style={{ fontSize: '0.5rem', letterSpacing: '5px', color: 'var(--gold)', textTransform: 'uppercase', marginLeft: '2px' }}>
+            Premium Timepieces
+          </span>
+        </div>
+
+        {/* Nav Links */}
+        <div style={{ display: 'flex', gap: '3rem', alignItems: 'center' }}>
+          <span onClick={onCollectionClick} className="nav-link"
+            style={{ color: 'var(--text-muted)', cursor: 'pointer', fontSize: '0.7rem', fontWeight: 400, letterSpacing: '2px', textTransform: 'uppercase' }}>
             Collection
           </span>
-          <span 
-            onClick={onHeritageClick} 
-            style={{ color: 'var(--text-main)', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 400, opacity: 0.8 }}
-            className="nav-link"
-          >
+          <span onClick={onHeritageClick} className="nav-link"
+            style={{ color: 'var(--text-muted)', cursor: 'pointer', fontSize: '0.7rem', fontWeight: 400, letterSpacing: '2px', textTransform: 'uppercase' }}>
             Heritage
           </span>
-          <div style={{ position: 'relative', width: '150px' }}>
-            <input 
-              type="text" 
-              placeholder="Search"
+          <div style={{ position: 'relative' }}>
+            <input
+              type="text"
+              placeholder="Search timepieces..."
               onChange={(e) => onSearch(e.target.value)}
-              style={{ 
-                width: '100%', 
-                padding: '0.4rem 0.8rem', 
-                background: 'transparent', 
-                border: 'none', 
+              style={{
+                width: '180px',
+                padding: '0.4rem 0.8rem 0.4rem 1.8rem',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: '2px',
                 color: 'var(--text-main)',
-                fontSize: '0.75rem',
-                borderBottom: '1px solid rgba(0,0,0,0.1)'
+                fontSize: '0.68rem',
+                letterSpacing: '1px',
+                outline: 'none',
+                transition: 'border-color 0.3s ease',
               }}
+              onFocus={(e) => e.target.style.borderColor = 'rgba(184,150,90,0.4)'}
+              onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.06)'}
             />
+            <span style={{ position: 'absolute', left: '0.6rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-subtle)', fontSize: '0.7rem' }}>⌕</span>
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-          <button 
-            onClick={onAccountClick}
-            style={{ background: 'none', border: 'none', color: user ? 'var(--primary)' : 'var(--text-main)', fontSize: '0.75rem', fontWeight: 400, opacity: 0.8 }}
+        {/* Right Actions */}
+        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+          <button onClick={onAccountClick}
+            style={{ background: 'none', border: 'none', color: user ? 'var(--gold)' : 'var(--text-muted)', fontSize: '0.68rem', fontWeight: 400, letterSpacing: '2px', textTransform: 'uppercase', cursor: 'pointer', transition: 'color 0.3s' }}
+            onMouseOver={(e) => e.currentTarget.style.color = 'var(--gold)'}
+            onMouseOut={(e) => e.currentTarget.style.color = user ? 'var(--gold)' : 'var(--text-muted)'}
           >
             {user ? user.name.toUpperCase() : 'Sign In'}
           </button>
-          
-          <button 
-            onClick={onCartClick}
-            style={{ background: 'none', border: 'none', color: 'var(--text-main)', fontWeight: 600, fontSize: '0.75rem', position: 'relative' }}
+
+          <button onClick={onCartClick}
+            style={{ background: 'none', border: '1px solid var(--border-subtle)', borderRadius: '2px', color: 'var(--text-muted)', fontSize: '0.68rem', letterSpacing: '2px', textTransform: 'uppercase', cursor: 'pointer', padding: '0.4rem 1rem', position: 'relative', transition: 'all 0.3s ease' }}
+            onMouseOver={(e) => { e.currentTarget.style.borderColor = 'rgba(184,150,90,0.5)'; e.currentTarget.style.color = 'var(--gold)'; }}
+            onMouseOut={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'var(--text-muted)'; }}
           >
-            Bag <span style={{ fontSize: '0.6rem', position: 'absolute', top: '-5px', right: '-10px', background: 'var(--text-main)', color: 'white', padding: '1px 4px', borderRadius: '10px' }}>{cartCount}</span>
+            Bag
+            {cartCount > 0 && (
+              <span style={{ position: 'absolute', top: '-6px', right: '-6px', background: 'var(--gold)', color: '#0d0d0d', fontSize: '0.55rem', fontWeight: 700, width: '16px', height: '16px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {cartCount}
+              </span>
+            )}
           </button>
         </div>
       </div>
