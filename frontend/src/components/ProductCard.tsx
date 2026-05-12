@@ -18,19 +18,23 @@ const ProductCard = ({ watch, onAddToCart, onViewDetails }: ProductCardProps) =>
     <div className="watch-card" onClick={() => onViewDetails(watch)}>
       <div style={{ 
         width: '100%', 
-        height: '320px', 
+        height: '280px', 
         overflow: 'hidden', 
-        background: '#f8f8f8', 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center',
-        padding: '1rem'
+        background: '#f0eeeb',
+        flexShrink: 0
       }}>
         <img 
           src={watch.imageUrl} 
           alt={watch.name} 
-          style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}
-          onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+          style={{ 
+            width: '100%', 
+            height: '100%', 
+            objectFit: 'cover', 
+            objectPosition: 'center',
+            transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+            display: 'block'
+          }}
+          onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.08)'}
           onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
         />
       </div>
