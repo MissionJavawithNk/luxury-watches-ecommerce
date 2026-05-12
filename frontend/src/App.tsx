@@ -22,6 +22,12 @@ const FALLBACK: Watch[] = [
   { id: 4, name: 'Royal Oak', brand: 'Audemars Piguet', price: 45000, category: 'Luxury', imageUrl: 'https://images.unsplash.com/photo-1619134778706-7015533a6150?auto=format&fit=crop&q=80&w=800' },
   { id: 5, name: 'Portugieser', brand: 'IWC', price: 9800, category: 'Dress', imageUrl: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&q=80&w=800' },
   { id: 6, name: 'Reverso', brand: 'Jaeger-LeCoultre', price: 11200, category: 'Dress', imageUrl: 'https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&q=80&w=800' },
+  { id: 7, name: 'Seamaster 300', brand: 'Omega', price: 5200, category: 'Diver', imageUrl: 'https://images.unsplash.com/photo-1548171916-c0dea76c7817?auto=format&fit=crop&q=80&w=800' },
+  { id: 8, name: 'Black Bay', brand: 'Tudor', price: 3800, category: 'Diver', imageUrl: 'https://images.unsplash.com/photo-1622434641406-a15812345ad1?auto=format&fit=crop&q=80&w=800' },
+  { id: 9, name: 'Daytona', brand: 'Rolex', price: 35000, category: 'Chronograph', imageUrl: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&q=80&w=800' },
+  { id: 10, name: 'Carrera', brand: 'TAG Heuer', price: 4200, category: 'Chronograph', imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800' },
+  { id: 11, name: 'Overseas', brand: 'Vacheron Constantin', price: 22000, category: 'Luxury', imageUrl: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&q=80&w=800' },
+  { id: 12, name: 'Calatrava', brand: 'Patek Philippe', price: 21000, category: 'Dress', imageUrl: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&q=80&w=800' },
 ];
 
 const categories = ['All', 'Diver', 'Chronograph', 'Luxury', 'Dress'];
@@ -54,6 +60,11 @@ function App() {
   const filterByCategory = (cat: string) => {
     setActiveCategory(cat);
     setFilteredWatches(cat === 'All' ? watches : watches.filter(w => w.category === cat));
+    
+    // Scroll to collection smoothly
+    setTimeout(() => {
+      document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   const addToCart = (watch: Watch) => { setCartItems([...cartItems, watch]); setIsCartOpen(true); };
@@ -82,7 +93,7 @@ function App() {
         onCartClick={() => setIsCartOpen(true)}
         onAccountClick={() => !user && setIsLoginOpen(true)}
         onSearch={handleSearch}
-        onCollectionClick={() => { setSelectedWatch(null); setTimeout(() => document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' }), 100); }}
+        onCollectionClick={() => { setSelectedWatch(null); filterByCategory('All'); }}
         onHeritageClick={() => { setSelectedWatch(null); setTimeout(() => document.getElementById('heritage')?.scrollIntoView({ behavior: 'smooth' }), 100); }}
         user={user}
       />
@@ -119,18 +130,19 @@ function App() {
                 <h2 className="serif" style={{ fontSize: '3rem', fontWeight: 300 }}>Curated Masterpieces</h2>
               </div>
               
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
                 {[
+                  { id: 'All', name: 'All Collections', img: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=1000' },
                   { id: 'Diver', name: 'Diver', img: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&q=80&w=1000' },
                   { id: 'Chronograph', name: 'Chronograph', img: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&q=80&w=1000' },
-                  { id: 'Luxury', name: 'Luxury', img: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=1000' }
+                  { id: 'Luxury', name: 'Luxury', img: 'https://images.unsplash.com/photo-1619134778706-7015533a6150?auto=format&fit=crop&q=80&w=1000' }
                 ].map((cat) => (
                   <div 
                     key={cat.id}
                     onClick={() => filterByCategory(cat.id)}
                     className="watch-card"
                     style={{ 
-                      height: '450px', 
+                      height: '400px', 
                       position: 'relative', 
                       cursor: 'pointer',
                       border: activeCategory === cat.id ? '1px solid var(--gold)' : '1px solid var(--border-subtle)'
@@ -144,7 +156,7 @@ function App() {
                           width: '100%', 
                           height: '100%', 
                           objectFit: 'cover',
-                          opacity: 0.6,
+                          opacity: activeCategory === cat.id ? 0.8 : 0.5,
                           transition: 'transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)'
                         }}
                         onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
@@ -153,16 +165,9 @@ function App() {
                       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(13,13,13,0.9) 0%, transparent 70%)' }} />
                     </div>
                     
-                    <div style={{ position: 'absolute', bottom: '2.5rem', left: '2rem', zIndex: 2 }}>
-                      <p className="overline" style={{ color: 'var(--gold)', marginBottom: '0.5rem' }}>Explore</p>
-                      <h3 className="serif" style={{ fontSize: '2.5rem', color: 'var(--text-main)', fontWeight: 300 }}>{cat.name}</h3>
-                      <div style={{ 
-                        width: activeCategory === cat.id ? '60px' : '0px', 
-                        height: '1px', 
-                        background: 'var(--gold)', 
-                        marginTop: '1rem',
-                        transition: 'width 0.5s ease'
-                      }} />
+                    <div style={{ position: 'absolute', bottom: '2rem', left: '1.5rem', zIndex: 2 }}>
+                      <p className="overline" style={{ color: 'var(--gold)', marginBottom: '0.4rem', fontSize: '0.55rem' }}>{cat.id === 'All' ? 'View' : 'Explore'}</p>
+                      <h3 className="serif" style={{ fontSize: '2rem', color: 'var(--text-main)', fontWeight: 300 }}>{cat.name}</h3>
                     </div>
                   </div>
                 ))}
